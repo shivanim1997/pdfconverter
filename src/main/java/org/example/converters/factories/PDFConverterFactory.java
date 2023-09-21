@@ -9,7 +9,6 @@ import org.example.converters.impl.ConverterFromDocx;
 import org.example.converters.impl.ConverterFromHTML;
 import org.example.converters.impl.ConverterFromText;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.nio.file.Path;
@@ -23,7 +22,7 @@ public class PDFConverterFactory {
             Map.entry("HTML", ConverterFromHTML.class)
     );
 
-    public static String convert(String source, String destinationFolder) throws PDFConversionGeneralException {
+    public static PDFConverter getConverter(String source, String destinationFolder) throws PDFConversionGeneralException {
         PDFConverter converter;
         final String incomingFileType = source.substring(source.lastIndexOf(".") + 1).toUpperCase();
 
@@ -51,14 +50,9 @@ public class PDFConverterFactory {
         final String destination = destinationFolder + fileNameWithoutExtension + ".pdf";
 
 
-        try {
-            converter.setSource(source);
-            converter.setDestination(destination);
-            converter.run();
-        } catch (IOException e) {
-            throw new PDFConversionGeneralException(e);
-        }
+        converter.setSource(source);
+        converter.setDestination(destination);
 
-        return destination;
+        return converter;
     }
 }

@@ -1,6 +1,6 @@
 package org.example.converters.exceptions;
 
-public class PDFConverterCouldNotInstantiateException extends PDFConversionGeneralException{
+public class PDFConverterCouldNotInstantiateException extends PDFConversionGeneralException {
     public PDFConverterCouldNotInstantiateException() {
     }
 

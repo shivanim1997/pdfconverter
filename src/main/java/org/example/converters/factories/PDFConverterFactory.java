@@ -10,12 +10,13 @@ import org.example.converters.impl.ConverterFromHTML;
 import org.example.converters.impl.ConverterFromText;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
+
 public class PDFConverterFactory {
 
-    private static final Map<String, Class<? extends PDFConverter>> converters = Map.ofEntries(
+    private static final Map<String, Class<? extends PDFConverter>> CONVERTERS = Map.ofEntries(
             Map.entry("TXT", ConverterFromText.class),
             Map.entry("DOCX", ConverterFromDocx.class),
             Map.entry("DOCS", ConverterFromDocx.class),
@@ -27,7 +28,7 @@ public class PDFConverterFactory {
         final String incomingFileType = source.substring(source.lastIndexOf(".") + 1).toUpperCase();
 
         try {
-            converter = converters.get(incomingFileType).getDeclaredConstructor().newInstance();
+            converter = CONVERTERS.get(incomingFileType).getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
             throw new PDFConverterCouldNotInstantiateException(e);
         } catch (IllegalAccessException e) {

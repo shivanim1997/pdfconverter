@@ -1,6 +1,6 @@
 package org.example.converters.exceptions;
 
-public class PDFConverterNotFoundException extends PDFConversionGeneralException{
+public class PDFConverterNotFoundException extends PDFConversionGeneralException {
     public PDFConverterNotFoundException() {
     }
 

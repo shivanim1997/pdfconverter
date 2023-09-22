@@ -1,6 +1,6 @@
 package org.example.converters.exceptions;
 
-public class PDFConverterNotAccessibleException extends PDFConversionGeneralException{
+public class PDFConverterNotAccessibleException extends PDFConversionGeneralException {
     public PDFConverterNotAccessibleException() {
     }
 

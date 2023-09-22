@@ -1,13 +1,8 @@
 package org.example.converters.impl;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.example.converters.PDFConverter;
 
-import java.io.*;
+import java.io.IOException;
 
 public class ConverterFromHTML extends PDFConverter {
 

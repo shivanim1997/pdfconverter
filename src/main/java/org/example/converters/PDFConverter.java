@@ -5,6 +5,7 @@ import java.io.IOException;
 public abstract class PDFConverter {
     protected String source;
     protected String destination;
+
     public void setSource(String source) {
         this.source = source;
     }

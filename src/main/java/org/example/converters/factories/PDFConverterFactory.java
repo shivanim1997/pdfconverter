@@ -1,10 +1,7 @@
 package org.example.converters.factories;
 
 import org.example.converters.PDFConverter;
-import org.example.converters.exceptions.PDFConversionGeneralException;
-import org.example.converters.exceptions.PDFConverterCouldNotInstantiateException;
-import org.example.converters.exceptions.PDFConverterNotAccessibleException;
-import org.example.converters.exceptions.PDFConverterNotFoundException;
+import org.example.converters.exceptions.*;
 import org.example.converters.impl.ConverterFromDocx;
 import org.example.converters.impl.ConverterFromHTML;
 import org.example.converters.impl.ConverterFromText;
@@ -14,7 +11,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
+
+
 public class PDFConverterFactory {
+
+     // A mapping of file extensions to corresponding {@link PDFConverter} implementations.
 
     private static final Map<String, Class<? extends PDFConverter>> CONVERTERS = Map.ofEntries(
             Map.entry("TXT", ConverterFromText.class),
@@ -23,10 +24,14 @@ public class PDFConverterFactory {
             Map.entry("HTML", ConverterFromHTML.class)
     );
 
+
     public static PDFConverter getConverter(String source, String destinationFolder) throws PDFConversionGeneralException {
         PDFConverter converter;
         final String incomingFileType = source.substring(source.lastIndexOf(".") + 1).toUpperCase();
 
+        if (!CONVERTERS.containsKey(incomingFileType)) {
+            throw new PDFConverterNotFoundException("Converter not found for file type: " + incomingFileType);
+        }
         try {
             converter = CONVERTERS.get(incomingFileType).getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
@@ -35,8 +40,6 @@ public class PDFConverterFactory {
             throw new PDFConverterNotAccessibleException(e);
         } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
-            throw new PDFConverterNotFoundException(e);
         } catch (Exception e) {
             throw new PDFConversionGeneralException(e);
         }
@@ -56,4 +59,5 @@ public class PDFConverterFactory {
 
         return converter;
     }
+
 }

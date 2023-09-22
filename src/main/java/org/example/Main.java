@@ -7,7 +7,7 @@ import org.example.converters.factories.PDFConverterFactory;
 public class Main {
     public static void main(String[] args) {
 
-        String source = "C:\\Users\\smilindm\\IdeaProjects\\pdfconverter\\src\\main\\resources\\HELLLOOOOOO.txt";
+        String source = "C:\\Users\\smilindm\\IdeaProjects\\pdfconverter\\src\\main\\resources\\HELLLOOOOOO.ppt";
         String destinationPath = "C:\\Users\\smilindm\\IdeaProjects\\pdfconverter\\src\\main\\resources\\";
 
         try {

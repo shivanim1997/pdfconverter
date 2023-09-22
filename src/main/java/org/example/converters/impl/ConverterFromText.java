@@ -9,18 +9,24 @@ import org.example.converters.PDFConverter;
 
 import java.io.*;
 
+
 public class ConverterFromText extends PDFConverter {
+
+//  Converts the source text file to a PDF document.
+//  @throws IOException if an I/O error occurs during the conversion process.
 
     @Override
     public void run() throws IOException {
         final String source = this.source;
         final String destination = this.destination;
 
+        // Create a new PDF document and page
+
         PDDocument pdfDocument = new PDDocument();
         PDPage page = new PDPage(PDRectangle.A4);
         pdfDocument.addPage(page);
 
-        // Create a content stream for the PDF
+        // Create a content stream for the PDF and set the font
         PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page);
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
 

@@ -16,43 +16,47 @@ public class ConverterFromText extends PDFConverter {
 //  @throws IOException if an I/O error occurs during the conversion process.
 
     @Override
-    public void run() throws IOException {
-        final String source = this.source;
-        final String destination = this.destination;
+    public void run() {
+        try {
+            final String source = this.source;
+            final String destination = this.destination;
 
-        // Create a new PDF document and page
+            // Create a new PDF document and page
 
-        PDDocument pdfDocument = new PDDocument();
-        PDPage page = new PDPage(PDRectangle.A4);
-        pdfDocument.addPage(page);
+            PDDocument pdfDocument = new PDDocument();
+            PDPage page = new PDPage(PDRectangle.A4);
+            pdfDocument.addPage(page);
 
-        // Create a content stream for the PDF and set the font
-        PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page);
-        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            // Create a content stream for the PDF and set the font
+            PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page);
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
 
-        // Read the text from the text file and add it to the PDF
-        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
-            String line;
-            float yPosition = page.getMediaBox().getHeight() - 20; // Starting position
+            // Read the text from the text file and add it to the PDF
+            try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
+                String line;
+                float yPosition = page.getMediaBox().getHeight() - 20; // Starting position
 
-            while ((line = reader.readLine()) != null) {
-                contentStream.beginText();
-                contentStream.newLineAtOffset(20, yPosition);
-                contentStream.showText(line);
-                contentStream.endText();
-                yPosition -= 15; // Adjust for the next line
+                while ((line = reader.readLine()) != null) {
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(20, yPosition);
+                    contentStream.showText(line);
+                    contentStream.endText();
+                    yPosition -= 15; // Adjust for the next line
+                }
             }
+
+            // Close the content stream and save the PDF
+            contentStream.close();
+
+            try (OutputStream outputStream = new FileOutputStream(destination)) {
+                pdfDocument.save(outputStream);
+            }
+
+            pdfDocument.close();
+
+            System.out.println("Text file to PDF conversion completed.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // Close the content stream and save the PDF
-        contentStream.close();
-
-        try (OutputStream outputStream = new FileOutputStream(destination)) {
-            pdfDocument.save(outputStream);
-        }
-
-        pdfDocument.close();
-
-        System.out.println("Text file to PDF conversion completed.");
     }
 }

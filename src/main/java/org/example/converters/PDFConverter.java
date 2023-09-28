@@ -2,7 +2,7 @@ package org.example.converters;
 
 import java.io.IOException;
 
-public abstract class PDFConverter {
+public abstract class PDFConverter implements Runnable {
     protected String source;
     protected String destination;
 
@@ -14,6 +14,6 @@ public abstract class PDFConverter {
         this.destination = destination;
     }
 
-    public abstract void run() throws IOException;
+    public abstract void run();
 
 }
